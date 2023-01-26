@@ -6,11 +6,11 @@ pub struct Elves {
 }
 
 pub trait MostWantedElfCalculator {
-    fn calculate_most_wanted_elf(&self) -> Option<&Elf>; 
+    fn calculate_most_wanted_elves(&self, amount: usize) -> Option<Vec<&Elf>>; 
 }
 
 impl MostWantedElfCalculator for Elves {
-    fn calculate_most_wanted_elf(&self) -> Option<&Elf> {
+    fn calculate_most_wanted_elves(&self, amount: usize) -> Option<Vec<&Elf>> {
         let mut elf_map: BTreeMap<usize, Vec<&Elf>> = BTreeMap::new();
 
         for elf in &self.elements  {
@@ -26,13 +26,25 @@ impl MostWantedElfCalculator for Elves {
             return None;
         }
 
-        let max_calorie_count = elf_map.iter().map(|e| e.0).max().unwrap();
-        let elves_with_max_calorie_count = elf_map.get(max_calorie_count).unwrap();
+        let mut elves: Vec<&Elf> = Vec::new();
+        let mut index: usize = 1;
 
-        match elves_with_max_calorie_count.len() {
-            1 => Some(elves_with_max_calorie_count.first().unwrap()),
-            _ => None,
+        for elf_entry in elf_map.iter().rev() {
+            for elf in elf_entry.1.to_owned() {
+                elves.push(elf);
+                index += 1;
+                if index > amount
+                {
+                    break;
+                }
+            }
+
+            if index > amount
+            {
+                break;
+            }
         }
+        Some(elves)
     }
 }
 
@@ -41,7 +53,7 @@ fn calculate_most_wanted_elf_should_return_none() {
     let elves = Elves {
         elements: Vec::new()
     };
-    assert_eq!(None, elves.calculate_most_wanted_elf());
+    assert_eq!(None, elves.calculate_most_wanted_elves(1));
 }
 
 #[test]
@@ -52,7 +64,7 @@ fn calculate_most_wanted_elf_should_return_some() {
             calorie_count: vec![1, 2, 3]
         }]
     };
-    assert_eq!(Some(&Elf { index: 1, calorie_count: vec![1, 2, 3]}), elves.calculate_most_wanted_elf());
+    assert_eq!(Some(vec![ &Elf { index: 1, calorie_count: vec![1, 2, 3]}]), elves.calculate_most_wanted_elves(1));
 }
 
 #[test]
@@ -66,5 +78,23 @@ fn calculate_most_wanted_elf_should_return_some_2() {
             calorie_count: vec![1, 5, 3]
         }]
     };
-    assert_eq!(Some(&Elf { index: 2, calorie_count: vec![1, 5, 3]}), elves.calculate_most_wanted_elf());
+    assert_eq!(Some(vec! [ &Elf { index: 2, calorie_count: vec![1, 5, 3]} ]), elves.calculate_most_wanted_elves(1));
+}
+
+#[test]
+fn calculate_most_wanted_elf_should_return_some_3() {
+    let elves = Elves {
+        elements: vec![Elf {
+            index: 1,
+            calorie_count: vec![1, 2, 3]
+        },Elf {
+            index: 2,
+            calorie_count: vec![1, 5, 3]
+        },Elf {
+            index: 3,
+            calorie_count: vec![1, 1, 1]
+        }]
+    };
+    let result = elves.calculate_most_wanted_elves(2);
+    assert_eq!(Some(vec! [ &Elf { index: 2, calorie_count: vec![1, 5, 3]}, &Elf { index: 1, calorie_count: vec![1, 2, 3]} ]), result);
 }
