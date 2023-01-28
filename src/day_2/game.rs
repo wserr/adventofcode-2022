@@ -1,4 +1,4 @@
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone, Debug)]
 pub enum Move
 {
     Rock,
@@ -13,6 +13,15 @@ pub enum Player
     Player2
 }
 
+#[derive(PartialEq, Debug)]
+pub enum Outcome
+{
+    Win,
+    Lose,
+    Draw
+}
+
+#[derive(Debug, PartialEq)]
 pub struct Game
 {
     // Move of player 1
@@ -27,12 +36,6 @@ trait PointsCalculator
     fn calculate_points(&self) -> i8;
 }
 
-pub trait GamePlay
-{
-    fn calculate_score_for_player(&self, player: Player) -> i16;
-    fn calculate_winner(&self) -> Option<&Player>;
-}
-
 impl PointsCalculator for Move
 {
     fn calculate_points(&self) -> i8 {
@@ -44,6 +47,76 @@ impl PointsCalculator for Move
         }
     }
 }
+
+pub trait GamePlay
+{
+    fn calculate_score_for_player(&self, player: Player) -> i16;
+    fn calculate_winner(&self) -> Option<&Player>;
+}
+
+pub trait GameTransformer
+{
+    // Views the second move of the input game as the desired outcome
+    // Based on the desired outcome, the second move will be converted and the result will be
+    // transformed into a new game
+    fn transform_game(&self) -> Game;
+}
+
+impl GameTransformer for Game
+{
+    fn transform_game(&self) -> Game {
+
+        let outcome = match self.move_2 {
+            Move::Rock => Outcome::Lose,
+            Move::Paper => Outcome::Draw,
+            Move::Scissors => Outcome::Win
+        };
+        let move_2 = calculate_move_for_desired_outcome(&self.move_1, outcome);
+
+        Game { move_1: self.move_1.clone(), move_2 }
+
+    }
+
+}
+
+#[test]
+fn transform_game_should_transform_game() {
+    let input = Game {
+        move_1: Move::Scissors,
+        move_2: Move::Scissors
+    };
+    assert_eq!(Game { move_1: Move::Scissors, move_2: Move::Rock} ,input.transform_game());
+}
+
+fn calculate_move_for_desired_outcome(opponent_move: &Move, outcome: Outcome) -> Move
+{
+    match outcome {
+        Outcome::Draw => opponent_move.clone(),
+        Outcome::Win => match opponent_move {
+                Move::Rock => Move::Paper,
+                Move::Paper => Move::Scissors,
+                Move::Scissors => Move::Rock }
+        Outcome::Lose => match opponent_move {
+                Move::Rock => Move::Scissors,
+                Move::Paper => Move::Rock,
+                Move::Scissors => Move::Paper }
+    }
+}
+
+#[test]
+fn calculate_move_for_desired_outcome_should_return_scissors() {
+    assert_eq!(Move::Scissors, calculate_move_for_desired_outcome(&Move::Rock, Outcome::Lose));
+    assert_eq!(Move::Scissors, calculate_move_for_desired_outcome(&Move::Scissors, Outcome::Draw));
+    assert_eq!(Move::Scissors, calculate_move_for_desired_outcome(&Move::Paper, Outcome::Win));
+}
+
+#[test]
+fn calculate_move_for_desired_outcome_should_return_rock() {
+    assert_eq!(Move::Rock, calculate_move_for_desired_outcome(&Move::Paper, Outcome::Lose));
+    assert_eq!(Move::Rock, calculate_move_for_desired_outcome(&Move::Rock, Outcome::Draw));
+    assert_eq!(Move::Rock, calculate_move_for_desired_outcome(&Move::Scissors, Outcome::Win));
+}
+
 
 impl GamePlay for Game
 {
@@ -57,7 +130,6 @@ impl GamePlay for Game
         {
             points += 3;
         }
-        //points += i16::from(&self.move_1.calculate_points() + &self.move_2.calculate_points());
         points += match &player {
             &Player::Player1 => i16::from(self.move_1.calculate_points()),
             &Player::Player2 => i16::from(self.move_2.calculate_points())
@@ -68,20 +140,20 @@ impl GamePlay for Game
 
     fn calculate_winner(&self) -> Option<&Player> {
         // If moves are equal - no winner
-        // X: Rock
-        // Y: Paper
-        // Z: Scissors
-        // X - Y -> 2
-        // Y - X -> 1
-        // Z - X -> 2
-        // X - Z -> 1
-        // Y - Z -> 2
-        // Z - Y -> 1
+        // 1: Rock
+        // 2: Paper
+        // 3: Scissors
+        // 1 - 2 -> 2 (-1)
+        // 2 - 1 -> 1 (1)
+        // 3 - 1 -> 2 (2)
+        // 1 - 3 -> 1 (-2)
+        // 2 - 3 -> 2 (-1)
+        // 3 - 2 -> 1 (1)
         let sum: i8 = self.move_1.calculate_points() - self.move_2.calculate_points();
         match sum
         {
             0 => None,
-            -1 | -2 => Some(&Player::Player2),
+            -1 | 2 => Some(&Player::Player2),
             _ => Some(&Player::Player1)
         }
     }
