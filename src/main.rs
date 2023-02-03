@@ -3,6 +3,7 @@ mod day_2;
 mod day_3;
 mod day_4;
 mod day_5;
+mod day_6;
 
 fn main() {
 //    println!("{}", day_1::solution_1());
@@ -17,6 +18,9 @@ fn main() {
 //    println!("{}", day_4::solution_1());
 //    println!("{}", day_4::solution_2());
 
-    println!("{}", day_5::solution_1());
-    println!("{}", day_5::solution_2());
+//    println!("{}", day_5::solution_1());
+//    println!("{}", day_5::solution_2());
+//
+      println!("{}", day_6::solution_1());
+      println!("{}", day_6::solution_2());
 }
