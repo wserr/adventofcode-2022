@@ -51,11 +51,11 @@ pub fn fetch_crates() -> Crates
 fn append_stacks(stacks: &mut Vec<VecDeque<String>>, input: &str)
 {
     
-    let re = Regex::new(r" ?(\[([A-Z])\]|   ) ?").unwrap();
+    let re = Regex::new(r" ?\[([A-Z])\]|(   ) ?").unwrap();
     
     let mut index = 0;
     for item in re.captures_iter(input) {
-        if &item[1] != "   "
+        if  None != item.get(1)
         {
             stacks[index].push_back(item[1].to_string());
         }

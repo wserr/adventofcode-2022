@@ -18,4 +18,5 @@ fn main() {
 //    println!("{}", day_4::solution_2());
 
     println!("{}", day_5::solution_1());
+    println!("{}", day_5::solution_2());
 }
