@@ -22,6 +22,9 @@ fn main() {
     //    println!("{}", day_5::solution_1());
     //    println!("{}", day_5::solution_2());
     //
-    println!("{}", day_6::solution_1());
-    println!("{}", day_6::solution_2());
+    //println!("{}", day_6::solution_1());
+    //println!("{}", day_6::solution_2());
+    //
+    println!("{}", day_7::solution_1());
+    println!("{}", day_7::solution_2());
 }
