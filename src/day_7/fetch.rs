@@ -17,21 +17,19 @@ pub fn fetch_commands() -> Vec<Command> {
     for line in lines {
         if line.starts_with(CD_COMMAND) {
             let dir_name = line.replace(CD_COMMAND, "");
-            if dir_name == ".."
-            {
+            if dir_name == ".." {
                 result.push(Command::MoveOut);
-            }
-            else if dir_name == "/"
-            {
+            } else if dir_name == "/" {
                 result.push(Command::MoveHome);
-            }
-            else
-            {
+            } else {
                 result.push(Command::MoveIn(dir_name));
             }
         } else {
             for capture in file_reg.captures_iter(line) {
-                result.push(Command::CreateFile(capture[2].parse().unwrap(), capture[1].parse::<usize>().unwrap()));
+                result.push(Command::CreateFile(
+                    capture[2].parse().unwrap(),
+                    capture[1].parse::<usize>().unwrap(),
+                ));
             }
             for capture in dir_reg.captures_iter(line) {
                 result.push(Command::CreateDirectory(capture[1].parse().unwrap()));
