@@ -7,21 +7,21 @@ mod day_6;
 mod day_7;
 
 fn main() {
-//    println!("{}", day_1::solution_1());
-//    println!("{}", day_1::solution_2());
-//
-//    println!("{}", day_2::solution_1());
-//    println!("{}", day_2::solution_2());
-//
-//    println!("{}", day_3::solution_1());
-//    println!("{}", day_3::solution_2());
-//
-//    println!("{}", day_4::solution_1());
-//    println!("{}", day_4::solution_2());
+    //    println!("{}", day_1::solution_1());
+    //    println!("{}", day_1::solution_2());
+    //
+    //    println!("{}", day_2::solution_1());
+    //    println!("{}", day_2::solution_2());
+    //
+    //    println!("{}", day_3::solution_1());
+    //    println!("{}", day_3::solution_2());
+    //
+    //    println!("{}", day_4::solution_1());
+    //    println!("{}", day_4::solution_2());
 
-//    println!("{}", day_5::solution_1());
-//    println!("{}", day_5::solution_2());
-//
-      println!("{}", day_6::solution_1());
-      println!("{}", day_6::solution_2());
+    //    println!("{}", day_5::solution_1());
+    //    println!("{}", day_5::solution_2());
+    //
+    println!("{}", day_6::solution_1());
+    println!("{}", day_6::solution_2());
 }

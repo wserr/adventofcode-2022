@@ -1,53 +1,46 @@
-pub fn find_common_items(item: String) -> Vec<char>
-{
-   let(part_one, part_two) = item.split_at(item.len()/2);
+pub fn find_common_items(item: String) -> Vec<char> {
+    let (part_one, part_two) = item.split_at(item.len() / 2);
 
-   let mut result: Vec<char> = Vec::new();
-   for c in part_one.chars().into_iter() {
-        if part_two.contains(c) && ! result.contains(&c)
-        {
+    let mut result: Vec<char> = Vec::new();
+    for c in part_one.chars().into_iter() {
+        if part_two.contains(c) && !result.contains(&c) {
             result.push(c);
         }
-   }
-   result
-}
-
-pub fn find_common_items_in_group(items: Vec<String>) -> Vec<char>
-{
-    let common_chars_1 = find_common_items_between_2_strings(items[0].clone(), items[1].clone());
-    let common_chars_2 = find_common_items_between_2_strings(items[0].clone(), items[2].clone());
-
-    find_common_items_between_2_strings(common_chars_1, common_chars_2).chars().collect()
-}
-
-fn find_common_items_between_2_strings(item_1 : String, item_2: String) -> String
-{
-    let mut result: String = String::from("");
-    for el_1 in item_1.chars() {
-        for el_2 in item_2.chars() {
-            if el_1 == el_2 && !result.contains(el_1)
-            {
-                result.push(el_1);
-            }
-        }
-    };
+    }
     result
 }
 
+pub fn find_common_items_in_group(items: Vec<String>) -> Vec<char> {
+    let common_chars_1 = find_common_items_between_2_strings(items[0].clone(), items[1].clone());
+    let common_chars_2 = find_common_items_between_2_strings(items[0].clone(), items[2].clone());
 
-pub fn calculate_priority(item: &char) -> Option<u32>
-{
-    match item.to_digit(36) 
-    {
+    find_common_items_between_2_strings(common_chars_1, common_chars_2)
+        .chars()
+        .collect()
+}
+
+fn find_common_items_between_2_strings(item_1: String, item_2: String) -> String {
+    let mut result: String = String::from("");
+    for el_1 in item_1.chars() {
+        for el_2 in item_2.chars() {
+            if el_1 == el_2 && !result.contains(el_1) {
+                result.push(el_1);
+            }
+        }
+    }
+    result
+}
+
+pub fn calculate_priority(item: &char) -> Option<u32> {
+    match item.to_digit(36) {
         Some(r) => {
             let mut code = r - 9;
-            if item.is_uppercase()
-            {
+            if item.is_uppercase() {
                 code += 26;
             }
             Some(code)
-        },
-        None => None
+        }
+        None => None,
     }
 }
 
@@ -57,7 +50,6 @@ fn find_common_items_should_find_char_a() {
     let output = find_common_items(input);
     assert_eq!(&char::from('a'), output.first().unwrap());
 }
-
 
 #[test]
 fn calculate_priority_should_calculate_for_lowercase() {
@@ -81,6 +73,8 @@ fn calculate_priority_should_calculate_for_uppercase() {
 fn find_common_items_between_2_strings_should_find_a() {
     let string_1 = String::from("Aaxa");
     let string_2 = String::from("abcdf");
-    assert_eq!(String::from("a"), find_common_items_between_2_strings(string_1, string_2));
+    assert_eq!(
+        String::from("a"),
+        find_common_items_between_2_strings(string_1, string_2)
+    );
 }
-

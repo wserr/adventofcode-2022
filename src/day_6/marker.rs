@@ -1,14 +1,11 @@
 use std::collections::VecDeque;
 
-pub fn calculate_marker(input: &str, amount_of_chars: usize) -> usize
-{
-    let mut vec : VecDeque<char> = VecDeque::new();
+pub fn calculate_marker(input: &str, amount_of_chars: usize) -> usize {
+    let mut vec: VecDeque<char> = VecDeque::new();
     let mut index: usize = 0;
     for ch in input.chars().into_iter() {
-        if vec.len() == amount_of_chars 
-        {
-            if all_elements_different(&vec)
-            {
+        if vec.len() == amount_of_chars {
+            if all_elements_different(&vec) {
                 break;
             }
             vec.pop_front();
@@ -19,13 +16,11 @@ pub fn calculate_marker(input: &str, amount_of_chars: usize) -> usize
     index
 }
 
-fn all_elements_different(input: &VecDeque<char>) -> bool
-{
-    let mut buffer : String = "".to_string();
-    for el in input.iter()  {
+fn all_elements_different(input: &VecDeque<char>) -> bool {
+    let mut buffer: String = "".to_string();
+    for el in input.iter() {
         let element_cloned = el.clone();
-        if buffer.contains(element_cloned)
-        {
+        if buffer.contains(element_cloned) {
             return false;
         }
         buffer.push(element_cloned);

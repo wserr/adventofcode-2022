@@ -5,7 +5,7 @@
       "filetypes": [ "rust" ],
       "configuration": {
         "request": "launch",
-        "program": "${workspaceRoot}/target/debug/adventofcode"
+        "program": "${workspaceRoot}/target/debug/deps/adventofcode-e51a52be554a7bdd"
       }
     }
   }
