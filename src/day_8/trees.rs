@@ -32,7 +32,7 @@ fn calculate_result_matrix(field: &Vec<Vec<usize>>) -> Vec<Vec<bool>> {
         .map(|x| {
             let result = x
                 .into_iter()
-                .map(|y| {
+                .map(|_| {
                     let result = visible_in_any_direction(field, current_y, current_x);
                     current_x += 1;
                     result
