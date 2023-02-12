@@ -10,29 +10,31 @@ mod day_09;
 mod day_10;
 
 fn main() {
-    //    println!("{}", day_1::solution_1());
-    //    println!("{}", day_1::solution_2());
+    //    println!("{}", day_01::solution_1());
+    //    println!("{}", day_01::solution_2());
     //
-    //    println!("{}", day_2::solution_1());
-    //    println!("{}", day_2::solution_2());
+    //    println!("{}", day_02::solution_1());
+    //    println!("{}", day_02::solution_2());
     //
-    //    println!("{}", day_3::solution_1());
-    //    println!("{}", day_3::solution_2());
+    //    println!("{}", day_03::solution_1());
+    //    println!("{}", day_03::solution_2());
     //
-    //    println!("{}", day_4::solution_1());
-    //    println!("{}", day_4::solution_2());
+    //    println!("{}", day_04::solution_1());
+    //    println!("{}", day_04::solution_2());
 
-    //    println!("{}", day_5::solution_1());
-    //    println!("{}", day_5::solution_2());
+    //    println!("{}", day_05::solution_1());
+    //    println!("{}", day_05::solution_2());
     //
-    //println!("{}", day_6::solution_1());
-    //println!("{}", day_6::solution_2());
+    //println!("{}", day_06::solution_1());
+    //println!("{}", day_06::solution_2());
     //
-    //println!("{}", day_7::solution_1());
-    //println!("{}", day_7::solution_2());
+    //println!("{}", day_07::solution_1());
+    //println!("{}", day_07::solution_2());
     //
-    //println!("{}", day_8::solution_1());
-    //println!("{}", day_8::solution_2());
-    println!("{}", day_09::solution_1());
-    println!("{}", day_09::solution_2());
+    //println!("{}", day_08::solution_1());
+    //println!("{}", day_08::solution_2());
+    //println!("{}", day_09::solution_1());
+    //println!("{}", day_09::solution_2());
+    println!("{}", day_10::solution_1());
+    println!("{}", day_10::solution_2());
 }
