@@ -2,7 +2,7 @@ use super::pairs::Pair;
 use regex::Regex;
 
 pub fn fetch_day_4() -> Vec<Pair> {
-    include_str!("../../inputs/4.txt")
+    include_str!("../../inputs/04.txt")
         .lines()
         .map(|r| calculate_pair_from_string(r))
         .collect()

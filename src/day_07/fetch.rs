@@ -10,7 +10,7 @@ const DIR_REGEX: &'static str = r"dir (.+)";
 
 pub fn fetch_commands() -> Vec<Command> {
     let mut result = Vec::new();
-    let lines = include_str!("../../inputs/7.txt").lines();
+    let lines = include_str!("../../inputs/07.txt").lines();
     let file_reg = Regex::new(FILE_REGEX).unwrap();
     let dir_reg = Regex::new(DIR_REGEX).unwrap();
 

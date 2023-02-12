@@ -4,7 +4,7 @@ use super::crates::{Crates, MoveOperation};
 use regex::Regex;
 
 fn fetch_input() -> Vec<String> {
-    include_str!("../../inputs/5.txt")
+    include_str!("../../inputs/05.txt")
         .lines()
         .map(|r| r.to_string())
         .collect()

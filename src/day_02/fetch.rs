@@ -3,7 +3,7 @@ use regex::Regex;
 use super::game::{Move, Game};
 
 pub fn fetch_day_2() -> Vec<Game> {
-    let input = include_str!("../../inputs/2.txt").lines();
+    let input = include_str!("../../inputs/02.txt").lines();
     let mut result: Vec<Game> = Vec::new();
 
     let re = Regex::new(r"(A|B|C) (X|Y|Z)").unwrap();

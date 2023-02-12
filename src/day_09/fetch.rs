@@ -3,7 +3,7 @@ use regex::Regex;
 use super::bridge::{Direction, Instruction};
 
 pub fn fetch_directions() -> Vec<Instruction> {
-    let input = include_str!("../../inputs/9.txt").lines();
+    let input = include_str!("../../inputs/09.txt").lines();
 
     let regex = Regex::new(r"([UDLR]) (\d+)").unwrap();
     let mut result = Vec::new();

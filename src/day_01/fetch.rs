@@ -3,7 +3,7 @@ use super::elves::Elves;
 
 pub fn fetch_day_1() -> Elves
 {
-    let input = include_str!("../../inputs/1.txt").lines();
+    let input = include_str!("../../inputs/01.txt").lines();
     let mut result: Elves = Elves { elements: Vec::new() };
 
     let mut current_index: usize = 1;

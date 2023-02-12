@@ -1,5 +1,5 @@
 pub fn fetch_day_3() -> Vec<String> {
-    include_str!("../../inputs/3.txt")
+    include_str!("../../inputs/03.txt")
         .lines()
         .map(|r| r.to_string())
         .collect()
@@ -8,7 +8,7 @@ pub fn fetch_day_3() -> Vec<String> {
 pub fn fetch_day_3_2() -> Vec<Vec<String>> {
     let mut result = Vec::new();
 
-    let input: Vec<String> = include_str!("../../inputs/3.txt")
+    let input: Vec<String> = include_str!("../../inputs/03.txt")
         .lines()
         .map(|r| r.to_string())
         .collect();
