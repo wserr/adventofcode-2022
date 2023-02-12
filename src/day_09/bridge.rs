@@ -1,4 +1,4 @@
-use crate::day_9::map::{Coordinate, Map};
+use crate::day_09::map::{Coordinate, Map};
 use std::collections::HashMap;
 
 pub enum Direction {

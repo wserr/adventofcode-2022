@@ -1,5 +1,5 @@
 use super::tree::{Tree, TreeCommander, TreeValue};
-use crate::day_7::tree::TreeQuerier;
+use crate::day_07::tree::TreeQuerier;
 use std::collections::BTreeMap;
 
 pub enum Command {
