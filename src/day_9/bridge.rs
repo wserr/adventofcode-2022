@@ -1,74 +1,5 @@
-use std::{collections::HashMap, fmt::Display};
-
-pub struct Map(HashMap<Coordinate, usize>);
-
-impl Display for Map {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let min_x = self.0.iter().map(|x| x.0.x).min().unwrap();
-        let min_y = self.0.iter().map(|y| y.0.y).min().unwrap();
-
-        let max_x = self.0.iter().map(|x| x.0.x).max().unwrap();
-        let max_y = self.0.iter().map(|y| y.0.y).max().unwrap();
-
-        let x_modifier = -min_x;
-        let y_modifier = -min_y;
-
-        let x_size: usize = (max_x + x_modifier + 1).try_into().unwrap();
-        let y_size: usize = (max_y + y_modifier + 1).try_into().unwrap();
-
-        let mut a: Vec<Vec<char>> = vec![vec!['.'; x_size]; y_size];
-
-        for item in self.0.iter() {
-            let c = item.0;
-            let x: usize = (c.x + x_modifier).try_into().unwrap();
-            let y: usize = (c.y + y_modifier).try_into().unwrap();
-            a[y][x] = '#';
-        }
-
-        for line in a {
-            for item in line.iter() {
-                write!(f, "{}", item)?
-            }
-            writeln!(f, "")?
-        }
-
-        write!(f, "")
-    }
-}
-
-pub fn calculate_tail_positions(instructions: &Vec<Instruction>) -> Map {
-    let mut map: Map = Map(HashMap::new());
-    let mut head = Coordinate { x: 0, y: 0 };
-
-    let mut tail = Coordinate { x: 0, y: 0 };
-
-    map.0.insert(tail.clone(), 1);
-
-    for instr in instructions {
-        let mut amount = instr.quantity;
-        while amount > 0 {
-            head = calculate_head_movement(&head, &instr.direction);
-            tail = calculate_tail_movement(&head, &tail);
-            map.0
-                .entry(tail.clone())
-                .and_modify(|x| *x += 1)
-                .or_insert(1);
-            amount -= 1;
-        }
-    }
-    println!("{}", map);
-    map
-}
-
-pub fn calculate_amount_of_tail_positions(instructions: &Vec<Instruction>) -> usize {
-    calculate_tail_positions(instructions).0.len()
-}
-
-#[derive(Debug, PartialEq, Eq, Hash, Clone)]
-pub struct Coordinate {
-    x: isize,
-    y: isize,
-}
+use crate::day_9::map::{Coordinate, Map};
+use std::collections::HashMap;
 
 pub enum Direction {
     Up,
@@ -80,6 +11,55 @@ pub enum Direction {
 pub struct Instruction {
     pub direction: Direction,
     pub quantity: isize,
+}
+
+pub fn calculate_tail_positions(
+    instructions: &Vec<Instruction>,
+    amount_of_tail_pieces: usize,
+) -> Map {
+    let mut map: Map = Map(HashMap::new());
+    let mut head = Coordinate { x: 0, y: 0 };
+
+    let mut tails: Vec<Coordinate> = Vec::new();
+
+    let mut index = amount_of_tail_pieces;
+
+    while index > 0 {
+        tails.push(Coordinate { x: 0, y: 0 });
+        index -= 1;
+    }
+
+    for instr in instructions {
+        let mut amount = instr.quantity;
+        while amount > 0 {
+            head = calculate_head_movement(&head, &instr.direction);
+            tails = tails.into_iter().fold(Vec::new(), |mut acc, x| {
+                if acc.len() == 0 {
+                    acc.push(calculate_tail_movement(&head, &x));
+                } else {
+                    let prev_element = acc.iter().last().unwrap();
+                    acc.push(calculate_tail_movement(prev_element, &x));
+                }
+                acc
+            });
+            map.0
+                .entry(tails.last().unwrap().clone())
+                .and_modify(|x| *x += 1)
+                .or_insert(1);
+            amount -= 1;
+        }
+    }
+    println!("{}", map);
+    map
+}
+
+pub fn calculate_amount_of_tail_positions(
+    instructions: &Vec<Instruction>,
+    amount_of_tail_pieces: usize,
+) -> usize {
+    calculate_tail_positions(instructions, amount_of_tail_pieces)
+        .0
+        .len()
 }
 
 fn calculate_head_movement(current_head: &Coordinate, direction: &Direction) -> Coordinate {
@@ -120,9 +100,13 @@ pub fn calculate_tail_movement(current_head: &Coordinate, current_tail: &Coordin
         // Vertical movement
         modifier_x = (current_head.x - current_tail.x) / 2;
     } else {
+        let calc_diag_mov = |x: isize| match x.abs() {
+            2 => x / 2,
+            _ => x,
+        };
         // Diagonal movement
-        modifier_y = (current_head.y - current_tail.y) / 2;
-        modifier_x = (current_head.x - current_tail.x) / 2;
+        modifier_y = calc_diag_mov(diff_y);
+        modifier_x = calc_diag_mov(diff_x);
     }
 
     Coordinate {
@@ -157,41 +141,29 @@ fn are_adjacent_should_be_false() {
 #[test]
 fn calculate_head_movement_should_calc_vert() {
     let head = Coordinate { x: 1, y: 1 };
-    let instruction = Instruction {
-        direction: Direction::Up,
-        quantity: 5,
-    };
 
     assert_eq!(
-        Coordinate { x: 1, y: -4 },
-        calculate_head_movement(&head, &instruction)
+        Coordinate { x: 1, y: 0 },
+        calculate_head_movement(&head, &Direction::Up)
     );
 }
 
 #[test]
 fn calculate_head_movement_should_calc_hor() {
     let head = Coordinate { x: 1, y: 1 };
-    let instruction = Instruction {
-        direction: Direction::Right,
-        quantity: 2,
-    };
     assert_eq!(
-        Coordinate { x: 3, y: 1 },
-        calculate_head_movement(&head, &instruction)
+        Coordinate { x: 2, y: 1 },
+        calculate_head_movement(&head, &Direction::Right)
     );
 }
 
 #[test]
 fn calculate_head_movement_should_calc() {
     let head = Coordinate { x: 1, y: 1 };
-    let instruction = Instruction {
-        direction: Direction::Up,
-        quantity: 5,
-    };
 
     assert_eq!(
-        Coordinate { x: 1, y: -4 },
-        calculate_head_movement(&head, &instruction)
+        Coordinate { x: 1, y: 0 },
+        calculate_head_movement(&head, &Direction::Up)
     );
 }
 

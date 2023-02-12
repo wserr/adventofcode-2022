@@ -33,4 +33,5 @@ fn main() {
     //println!("{}", day_8::solution_1());
     //println!("{}", day_8::solution_2());
     println!("{}", day_9::solution_1());
+    println!("{}", day_9::solution_2());
 }
