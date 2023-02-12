@@ -1,12 +1,13 @@
-mod day_1;
-mod day_2;
-mod day_3;
-mod day_4;
-mod day_5;
-mod day_6;
-mod day_7;
-mod day_8;
-mod day_9;
+mod day_01;
+mod day_02;
+mod day_03;
+mod day_04;
+mod day_05;
+mod day_06;
+mod day_07;
+mod day_08;
+mod day_09;
+mod day_10;
 
 fn main() {
     //    println!("{}", day_1::solution_1());
@@ -32,6 +33,6 @@ fn main() {
     //
     //println!("{}", day_8::solution_1());
     //println!("{}", day_8::solution_2());
-    println!("{}", day_9::solution_1());
-    println!("{}", day_9::solution_2());
+    println!("{}", day_09::solution_1());
+    println!("{}", day_09::solution_2());
 }
