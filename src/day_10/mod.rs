@@ -1,8 +1,8 @@
 use self::instructions::calculate_cycles;
 
+mod display;
 mod fetch;
 mod instructions;
-mod display;
 
 pub fn solution_1() -> String {
     let indeces_to_evaluate: Vec<usize> = vec![20, 60, 100, 140, 180, 220];
