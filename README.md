@@ -1,4 +1,4 @@
-[![Rust](https://github.com/wserr/adventofcode-2022/actions/workflows/rust.yml/badge.svg)](https://github.com/wserr/adventofcode-2022/actions/workflows/run-tests.yml)
+[![Rust](https://github.com/wserr/adventofcode-2022/actions/workflows/run-tests.yml/badge.svg)](https://github.com/wserr/adventofcode-2022/actions/workflows/run-tests.yml)
 
 # Advent of code 2022
 

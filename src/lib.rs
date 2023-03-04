@@ -1,6 +1,6 @@
 //! This is my attempt at solving AoC 2022 with rust.
 //!
-//! [![Rust](https://github.com/wserr/adventofcode-2022/actions/workflows/rust.yml/badge.svg)](https://github.com/wserr/adventofcode-2022/actions/workflows/run-tests.yml)
+//! [![Rust](https://github.com/wserr/adventofcode-2022/actions/workflows/run-tests.yml/badge.svg)](https://github.com/wserr/adventofcode-2022/actions/workflows/run-tests.yml)
 //!
 //! To run the solution of a specific day:
 //! ```bash
