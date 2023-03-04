@@ -1,6 +1,8 @@
-# adventofcode-2022
+[![Rust](https://github.com/wserr/adventofcode-2022/actions/workflows/rust.yml/badge.svg)](https://github.com/wserr/adventofcode-2022/actions/workflows/run-tests.yml)
 
-This repository contains my [AdventOfCode](https://adventofcode.com) solutions
+# Advent of code 2022
 
-[![Rust](https://github.com/wserr/adventofcode-2022/actions/workflows/rust.yml/badge.svg)](https://github.com/wserr/adventofcode-2022/actions/workflows/rust.yml)
+See website [here](https://wserr.github.io/adventofcode-2022/adventofcode/index.html)
+
+
 
