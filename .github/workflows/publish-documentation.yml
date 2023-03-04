@@ -38,7 +38,7 @@ jobs:
         uses: actions/upload-pages-artifact@v1
         with:
           # docs file
-          path: './target/doc'
+          path: './target/doc/adventofcode'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
